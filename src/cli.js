@@ -1,6 +1,7 @@
 import arg from 'arg'
 import inquirer from 'inquirer';
 import { createProject } from './main';
+import { version } from '../package.json';
 
 function parseArgumentsInOptions(rawArguments) {
   const args = arg(
@@ -8,11 +9,13 @@ function parseArgumentsInOptions(rawArguments) {
       '--git': Boolean,
       '--yes': Boolean,
       '--no-install': Boolean,
-      '--version': Boolean,
       '--template': String,
+      '--version': Boolean,
+      '--help': Boolean,
       '-t': '--template',
       '-v': '--version',
-      '-y': '--yes'
+      '-y': '--yes',
+      '-h': '--help'
     },
     {
       argv: rawArguments.splice(2)
@@ -25,6 +28,8 @@ function parseArgumentsInOptions(rawArguments) {
     name: args._[0],
     template: args['--template'],
     noInstall: args['--no-install'] || false,
+    version: args['--version'] || false,
+    help: args['--help'] || false,
   }
 }
 
@@ -88,6 +93,13 @@ async function promptForMissingOptions(options) {
 
 export async function cli(args) {
   let options = parseArgumentsInOptions(args);
+  if (options.version) {
+    return console.log(version);
+  } else if (options.help) {
+    return console.log('show help options');
+  }
   options = await promptForMissingOptions(options)
   await createProject(options)
+
+  // check for update
 }

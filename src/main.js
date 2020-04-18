@@ -7,6 +7,8 @@ import execa from 'execa';
 import Listr from 'listr';
 import fse from 'fs-extra';
 import { projectInstall } from 'pkg-install';
+import axios from 'axios';
+import { version, name } from '../package.json';
 
 const access = promisify(fs.access);
 const copy = promisify(ncp);
@@ -30,7 +32,21 @@ async function copyTemplateFiles(options) {
   })
 }
 
+async function checkUpdate() {
+  const { data } = await axios.get(`https://www.npmjs.com/search/suggestions?q=${name}`)
+  const packageInfo = data[0];
+
+  if (packageInfo.scope === 'idevia' && packageInfo.version !== version) {
+    console.log(`
+    ${chalk.magenta.bold('v' + packageInfo.version)} is available. To update run the following command
+
+    ${chalk.cyan.bold('npm install @idevia/create-project -g')}
+    `)
+  }
+}
+
 export async function createProject(options) {
+
   options = {
     ...options,
     targetDirectory: `${CURR_DIR}/${options.name}`
@@ -76,7 +92,6 @@ export async function createProject(options) {
     fse.removeSync(options.targetDirectory);
     throw err;
   }
-
-  console.log('%s Project is ready', chalk.green.bold('DONE'));
+  await checkUpdate();
   return true;
 }
