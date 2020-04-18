@@ -32,6 +32,14 @@ async function copyTemplateFiles(options) {
   })
 }
 
+async function configurePackageDotJson(options) {
+  let filePath = `${options.targetDirectory}/package.json`;
+  let rawData = fs.readFileSync(filePath);
+  let jsonData = JSON.parse(rawData);
+  jsonData.name = options.name;
+  fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2));
+}
+
 async function checkUpdate() {
   const { data } = await axios.get(`https://www.npmjs.com/search/suggestions?q=${name}`)
   const packageInfo = data[0];
@@ -75,6 +83,10 @@ export async function createProject(options) {
       title: 'Initializing Git',
       task: () => initGit(options),
       enabled: () => options.git
+    },
+    {
+      title: 'Configuring project',
+      task: () => configurePackageDotJson(options)
     },
     {
       title: 'Installing dependencies',
