@@ -1,0 +1,6 @@
+type Query {
+  users: [User]
+}
+type Mutation {
+  createUser(email: String!, password: String!): User!
+}
