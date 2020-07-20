@@ -21,7 +21,6 @@ function parseArgumentsInOptions(rawArguments) {
       argv: rawArguments.splice(2)
     }
   )
-  console.log(args)
   return {
     skipPrompts: args['--yes'] || false,
     git: args['--git'] || false,
@@ -81,7 +80,6 @@ async function promptForMissingOptions(options) {
   }
 
   const answers = await inquirer.prompt(questions)
-  console.log(answers)
   return {
     ...answers,
     template: options.template || answers.template,
