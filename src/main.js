@@ -27,7 +27,6 @@ async function initGit(options) {
 }
 
 async function copyTemplateFiles(options) {
-  console.log(options)
   return copy(options.templateDirectory, options.targetDirectory, {
     clobber: false
   })

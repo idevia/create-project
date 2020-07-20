@@ -1,0 +1,16 @@
+.hero {
+  min-height: calc(100vh - 58px);
+  overflow: hidden;
+  .hero-img {
+    z-index: -1;
+    width: 100%;
+    height: 80%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+.slider-subtitle {
+  font-size: 18px;
+}

@@ -32,7 +32,7 @@ function parseArgumentsInOptions(rawArguments) {
   }
 }
 
-const choices = ['express-api', 'graphql-typescript', 'html']
+const choices = ['express-api', 'graphql-typescript', 'html', 'html-bootstrap']
 
 async function promptForMissingOptions(options) {
   const defaultTemplate = 'express-api'

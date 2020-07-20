@@ -1,0 +1,16 @@
+@import 'vars';
+@import 'globals';
+@import 'modules';
+
+$theme-colors: (
+  'primary': #0b469b,
+  'danger': #ff1d79,
+  'success': #49be55
+);
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+body {
+  font-family: $regular;
+}

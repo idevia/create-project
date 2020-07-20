@@ -1,0 +1,16 @@
+ul.feature-list {
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 1rem;
+  li {
+    line-height: 2rem;
+    &::before {
+      content: '\2022';
+      color: $danger;
+      font-weight: bold;
+      display: inline-block;
+      width: 1em;
+      margin-left: -1em;
+    }
+  }
+}

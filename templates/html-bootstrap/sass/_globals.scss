@@ -1,0 +1,29 @@
+img {
+  max-width: 100%;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+.form-control-minimal {
+  background: transparent;
+  border-radius: 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid #e5e5e5 !important;
+  padding-left: 0 !important;
+  &:focus {
+    box-shadow: none !important;
+    border-color: $danger !important;
+  }
+}
+.btn:not(.nav-btn) {
+  min-width: 210px;
+}
+#home-carousel {
+  .row {
+    // min-height: 800px;
+  }
+}
+p {
+  color: #606060 !important;
+}
