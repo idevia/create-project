@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "bin": {
     "@idevia/create-project": "bin/create-project",
-    "create-project": "bin/create-project"
+    "icreate": "bin/create-project"
   },
   "publishConfig": {
     "access": "public"

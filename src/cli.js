@@ -1,7 +1,7 @@
 import arg from 'arg'
-import inquirer from 'inquirer';
-import { createProject } from './main';
-import { version } from '../package.json';
+import inquirer from 'inquirer'
+import { createProject } from './main'
+import { version } from '../package.json'
 
 function parseArgumentsInOptions(rawArguments) {
   const args = arg(
@@ -20,8 +20,8 @@ function parseArgumentsInOptions(rawArguments) {
     {
       argv: rawArguments.splice(2)
     }
-  );
-
+  )
+  console.log(args)
   return {
     skipPrompts: args['--yes'] || false,
     git: args['--git'] || false,
@@ -29,17 +29,14 @@ function parseArgumentsInOptions(rawArguments) {
     template: args['--template'],
     noInstall: args['--no-install'] || false,
     version: args['--version'] || false,
-    help: args['--help'] || false,
+    help: args['--help'] || false
   }
 }
 
-const choices = [
-  'express-api',
-  'html'
-]
+const choices = ['express-api', 'graphql-typescript', 'html']
 
 async function promptForMissingOptions(options) {
-  const defaultTemplate = 'express-api';
+  const defaultTemplate = 'express-api'
 
   if (options.skipPrompts) {
     return {
@@ -48,29 +45,29 @@ async function promptForMissingOptions(options) {
     }
   }
 
-  const questions = [];
+  const questions = []
 
   if (!options.name) {
-
     questions.push({
-      name: "name",
-      type: "input",
-      message: "what is the name of your project?\n",
+      name: 'name',
+      type: 'input',
+      message: 'what is the name of your project?\n',
       validate: function (input) {
-        if (/^([A-Za-z\-\_\d])+$/.test(input)) return true;
-        else
-          return "Project name may only include letters, numbers, underscores and hashes.";
+        if (/^([A-Za-z\-\_\d])+$/.test(input)) {
+          return true
+        } else {
+          return 'Project name may only include letters, numbers, underscores and hashes.'
+        }
       }
     })
   }
-
 
   if (!options.template) {
     questions.push({
       type: 'list',
       name: 'template',
       message: 'Please choose a template to use',
-      choices,
+      choices
     })
   }
 
@@ -83,20 +80,21 @@ async function promptForMissingOptions(options) {
     })
   }
 
-  const answers = await inquirer.prompt(questions);
+  const answers = await inquirer.prompt(questions)
+  console.log(answers)
   return {
-    ...options,
+    ...answers,
     template: options.template || answers.template,
     git: options.git || answers.git
-  };
+  }
 }
 
 export async function cli(args) {
-  let options = parseArgumentsInOptions(args);
+  let options = parseArgumentsInOptions(args)
   if (options.version) {
-    return console.log(version);
+    return console.log(version)
   } else if (options.help) {
-    return console.log('show help options');
+    return console.log('show help options')
   }
   options = await promptForMissingOptions(options)
   await createProject(options)
